@@ -1,0 +1,185 @@
+/* --- Styles for Comparison Section (Final Corrected Version) --- */
+
+/* 让列组整体居中 */
+.comparison-columns {
+    justify-content: center;
+  }
+  
+  /* 关键修改：删除了之前导致问题的 flex-grow: 0 规则 */
+  
+  .comparison-image-container {
+    width: 100%;
+    /* max-width 不再严格需要，但保留无害 */
+    max-width: 480px; 
+    aspect-ratio: 1 / 0.41;
+    margin-bottom: 0.75rem;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+    display: block; 
+    vertical-align: top;
+  }
+  
+  .comparison-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    object-position: center;
+  }
+  
+  
+  /* --- Styles from provided style.css file --- */
+  
+  /* General Page Styles (by Shangchen) */
+  .logo img {
+      width: 210px;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #f00;
+  }
+  
+  /* OPTIMIZED: Only the changed property is needed in the :hover state */
+  .logo img:hover {
+      box-shadow: 0 0 15px #f00;
+  }
+  
+  .container.is-max-desktop.head {
+      max-width: 95%;
+  }
+  
+  .button.is-rounded:hover {
+      transform: scale(1.02);
+      background-color: #fb5a42;
+  }
+  
+  #spotlight-video {
+      text-align: center;
+      transition: all .75s ease-in-out;
+  }
+  
+  #spotlight-video:hover {
+      background-color: #000;
+      padding: 150px 0 250px;
+      transform: scale(1.1); 
+      margin: 0 0 3rem;
+  }
+  
+  #spotlight-video:hover h2 span.a {
+      color: #FFBB00;
+  }
+  
+  #spotlight-video:hover h2 span.b {
+      color: #fff;
+  }
+  
+  /* Media Queries */
+  @media only screen and (max-width: 959px) {}
+  @media only screen and (min-width: 768px) and (max-width: 959px) {}
+  @media only screen and (max-width: 767px) {}
+  
+  /* === Interactive Shot Container Styles (Final Version) === */
+  .interactive-shot-container {
+      position: relative;
+      cursor: pointer;
+      background-color: #f0f0f0;
+      overflow: hidden;
+      aspect-ratio: 1 / 0.41;
+      border-radius: 4px;
+  }
+  
+  .interactive-shot-container img,
+  .interactive-shot-container video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: filter 0.3s ease;
+  }
+  
+  .interactive-shot-container.state-input:hover img {
+      filter: grayscale(60%);
+  }
+  
+  .interactive-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-family: 'Google Sans', sans-serif;
+      pointer-events: none;
+      z-index: 10;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+  }
+  
+  .interactive-shot-container.state-input:hover .interactive-overlay {
+      opacity: 1;
+  }
+  
+  .interactive-overlay i {
+      font-size: 40px;
+      margin-bottom: 10px;
+  }
+  
+  .interactive-overlay p {
+      font-size: 16px;
+      font-weight: 500;
+  }
+  
+  .shot-label {
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(0, 0, 0, 0.65);
+      color: #fff;
+      padding: 4px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 500;
+      font-family: 'Google Sans', sans-serif;
+      white-space: nowrap;
+      z-index: 12;
+  }
+  
+  .video-watermark {
+      position: absolute;
+      bottom: 0px;
+      right: 10px;
+      background-color: rgba(0, 0, 0, 0);
+      color: #fff;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+      font-family: 'Google Sans', sans-serif;
+      z-index: 12;
+  }
+  
+  .interactive-shot-container .desc {
+      position: absolute; 
+      bottom: 0px;
+      left: 0px;
+      z-index: 11;
+      width: auto;
+      display: inline-block; 
+      background-color: rgba(0, 0, 0, 0.65);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-family: 'Google Sans', sans-serif;
+      font-size: 12px;
+      white-space: nowrap; 
+  }

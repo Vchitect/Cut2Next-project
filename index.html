@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Cut2Next">
+  <meta name="keywords" content="Generating Next Shot via In-Context Tuning">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cut2Next</title>
+  <!-- Latex -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+      });
+  </script>
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
+  </script>
+
+  <style>
+  .hr {width: 100%; height: 1px; margin: 48px 0; background-color: #d6dbdf;}
+  </style>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/css/bulma.min.css">
+  <link rel="stylesheet" href="./assets/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./assets/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./assets/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="./assets/css/index.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- === LINK TO YOUR CUSTOM CSS FILE === -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop head">
+      <div class="columns is-centered">
+        <div class="column has-text-centered head">
+          <h1 class="title is-2 publication-title"><i class="fas fa-cut"></i> Cut2Next</h1>
+          <h1 class="title is-3 publication-title">Generating Next Shot via In-Context Tuning</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><a href="https://scholar.google.com/citations?user=GUxrycUAAAAJ&hl=zh-CN">Jingwen He</a><sup>1,2</sup>,  </span>
+            <span class="author-block"><a href="https://github.com/Alexios-hub">Hongbo Liu</a><sup>2</sup>,  </span>
+            <span class="author-block">Jiajun Li<sup>3</sup>,  </span> 
+            <span class="author-block"><a href="https://ziqihuangg.github.io">Ziqi Huang</a><sup>3</sup>,  </span>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><a href="https://scholar.google.com/citations?user=gFtI-8QAAAAJ&hl=en">Yu Qiao</a><sup>2</sup>,  </span>
+            <span class="author-block"><a href="https://wlouyang.github.io">Wanli Ouyang</a><sup>1†</sup>,  </span>
+            <span class="author-block"><a href="https://liuziwei7.github.io">Ziwei Liu</a><sup>3†</sup></span>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>The Chinese University of Hong Kong,  </span>
+            <span class="author-block"><sup>2</sup>Shanghai Artificial Intelligence Laboratory,  </span>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>3</sup>S-Lab, Nanyang Technological University</span>
+          </div>
+          <div class="is-size-6 publication-authors">
+            <span class="author-block"><sup>†</sup>Corresponding authors</span>
+          </div>
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span><span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block"> 
+                <a href="https://github.com/Vchitect/Cut2Next" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span><span>Code</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=4-olVWzeXGY" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-youtube"></i></span><span>Video</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- === FIRST CAROUSEL === -->
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item">
+          <div class="interactive-shot-container"
+               data-input-image="./assets/images/video1_input.jpg"
+               data-result-image="./assets/images/video1_result.jpg"
+               data-video-src="./assets/videos/cut2next_video1.mp4">
+            <div class="desc">Shot/Reverse Shot</div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="interactive-shot-container"
+               data-input-image="./assets/images/video5_input.jpg"
+               data-result-image="./assets/images/video5_result.jpg"
+               data-video-src="./assets/videos/cut2next_video5.mp4">
+            <div class="desc">Cut-Out</div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="interactive-shot-container"
+               data-input-image="./assets/images/video2_input.jpg"
+               data-result-image="./assets/images/video2_result.jpg"
+               data-video-src="./assets/videos/cut2next_video2.mp4">
+            <div class="desc">Shot/Reverse Shot</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- === SECOND CAROUSEL === -->
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel-2" class="carousel results-carousel">
+        <div class="item">
+          <div class="interactive-shot-container"
+               data-input-image="./assets/images/video3_input.jpg"
+               data-result-image="./assets/images/video3_result.jpg"
+               data-video-src="./assets/videos/cut2next_video3.mp4">
+            <div class="desc">Multi-Angle, Cut-Out</div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="interactive-shot-container"
+               data-input-image="./assets/images/video6_input.jpg"
+               data-result-image="./assets/images/video6_result.jpg"
+               data-video-src="./assets/videos/cut2next_video6.mp4">
+            <div class="desc">Cutaway</div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="interactive-shot-container"
+               data-input-image="./assets/images/video4_input.jpg"
+               data-result-image="./assets/images/video4_result.jpg"
+               data-video-src="./assets/videos/cut2next_video4.mp4">
+            <div class="desc">Cut-In</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>Effective multi-shot generation demands purposeful, film-like transitions and
+            strict cinematic continuity. Current methods, however, often prioritize basic
+            visual consistency, neglecting crucial editing patterns (e.g., shot/reverse shot,
+            cutaways) that drive narrative flow for compelling storytelling. This yields
+            outputs that may be visually coherent but lack narrative sophistication and
+            true cinematic integrity. To bridge this, we introduce <b>Next Shot Generation (NSG)</b>: synthesizing a subsequent, high-quality shot that critically conforms
+            to professional editing patterns while upholding rigorous cinematic continity. Our framework, <b></b>Cut2Next</b>, leverages a Diffusion Transformer (DiT). It
+            employs in-context tuning guided by a novel Hierarchical Multi-Prompting
+            strategy. This strategy uses Relational Prompts to define overall context and
+            inter-shot editing styles. Individual Prompts then specify per-shot content
+            and cinematographic attributes. Together, these guide Cut2Next to generate
+            cinematically appropriate next shots. Architectural innovations,  <em>Context-
+            Aware Condition Injection (CACI)</em> and <em>Hierarchical Attention Mask (HAM)</em>, 
+            further integrate these diverse signals without introducing new parameters. We construct RawCuts (large-scale) and CuratedCuts (refined) datasets,
+            both with hierarchical prompts, and introduce CutBench for evaluation.
+            Experiments show Cut2Next excels in visual consistency and text fidelity.
+            Crucially, user studies reveal a strong preference for Cut2Next, particularly
+            for its adherence to intended editing patterns and overall cinematic continuity, validating its ability to generate high-quality, narratively expressive,
+            and cinematically coherent subsequent shots.</p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+</section>
+
+
+
+<!-- ========== COMPARISON SECTION START (MODIFIED FOR FULL-WIDTH LAYOUT) ========== -->
+<section class="section">
+  <!-- Key Change: Removed "is-max-desktop" to allow the container to be wider -->
+  <div class="container">
+    <!-- Section Title -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-fullwidth">
+        <h2 class="title is-3">Visual Comparison</h2>
+      </div>
+    </div>
+    <hr>
+
+    <!-- === EXAMPLE 1: Shot/Reverse Shot === -->
+    <div class="content">
+      <p><strong>Cut-Out, Multi-Angle.</strong></p>
+    </div>
+    <!-- Key Change: Changed gap size from "is-2" to "is-1" for a smaller gap -->
+    <div class="columns is-vcentered comparison-columns is-variable is-1">
+      <div class="column is-3">
+        <div class="content has-text-centered">
+          <div class="comparison-image-container">
+            <img class="comparison-image" src="./assets/images/video3_input.jpg" alt="Input Shot for Example 1">
+          </div>
+          <p><strong>Input Shot</strong></p>
+        </div>
+      </div>
+      <div class="column is-3">
+        <div class="content has-text-centered">
+          <div class="comparison-image-container">
+            <img class="comparison-image" src="./assets/images/video3_result.jpg" alt="Cut2Next result for Example 1">
+          </div>
+          <p><strong>Cut2Next (Ours)</strong></p>
+        </div>
+      </div>
+      <div class="column is-3">
+        <div class="content has-text-centered">
+          <div class="comparison-image-container">
+            <img class="comparison-image" src="./assets/images/video3_result_kontext.jpg" alt="Flux-Kontext result for Example 1">
+          </div>
+          <p>Flux-Kontext</p>
+        </div>
+      </div>
+      <div class="column is-3">
+        <div class="content has-text-centered">
+          <div class="comparison-image-container">
+            <img class="comparison-image" src="./assets/images/video3_result_bagel.jpg" alt="BAGEL result for Example 1">
+          </div>
+          <p>BAGEL</p>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="content">
+      <p><strong>Cutaway, Multi-Angle</strong></p>
+    </div>
+    <!-- Key Change: Changed gap size from "is-2" to "is-1" for a smaller gap -->
+    <div class="columns is-vcentered comparison-columns is-variable is-1">
+      <div class="column is-3">
+        <div class="content has-text-centered">
+          <div class="comparison-image-container">
+            <img class="comparison-image" src="./assets/images/video6_input.jpg" alt="Input Shot for Example 2">
+          </div>
+          <p><strong>Input Shot</strong></p>
+        </div>
+      </div>
+      <div class="column is-3">
+        <div class="content has-text-centered">
+          <div class="comparison-image-container">
+            <img class="comparison-image" src="./assets/images/video6_result.jpg" alt="Cut2Next result for Example 2">
+          </div>
+          <p><strong>Cut2Next (Ours)</strong></p>
+        </div>
+      </div>
+      <div class="column is-3">
+        <div class="content has-text-centered">
+          <div class="comparison-image-container">
+            <img class="comparison-image" src="./assets/images/video6_result_kontext.jpg" alt="Flux-Kontext result for Example 2">
+          </div>
+          <p>Flux-Kontext</p>
+        </div>
+      </div>
+      <div class="column is-3">
+        <div class="content has-text-centered">
+          <div class="comparison-image-container">
+            <img class="comparison-image" src="./assets/images/video6_result_bagel.jpg" alt="BAGEL result for Example 2">
+          </div>
+          <p>BAGEL</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+      <p><strong>Shot/Reverse Shot</strong></p>
+    </div>
+    <!-- Key Change: Changed gap size from "is-2" to "is-1" for a smaller gap -->
+    <div class="columns is-vcentered comparison-columns is-variable is-1">
+      <div class="column is-3">
+        <div class="content has-text-centered">
+          <div class="comparison-image-container">
+            <img class="comparison-image" src="./assets/images/video2_input.jpg" alt="Input Shot for Example 2">
+          </div>
+          <p><strong>Input Shot</strong></p>
+        </div>
+      </div>
+      <div class="column is-3">
+        <div class="content has-text-centered">
+          <div class="comparison-image-container">
+            <img class="comparison-image" src="./assets/images/video2_result.jpg" alt="Cut2Next result for Example 2">
+          </div>
+          <p><strong>Cut2Next (Ours)</strong></p>
+        </div>
+      </div>
+      <div class="column is-3">
+        <div class="content has-text-centered">
+          <div class="comparison-image-container">
+            <img class="comparison-image" src="./assets/images/video2_result_kontext.jpg" alt="Flux-Kontext result for Example 2">
+          </div>
+          <p>Flux-Kontext</p>
+        </div>
+      </div>
+      <div class="column is-3">
+        <div class="content has-text-centered">
+          <div class="comparison-image-container">
+            <img class="comparison-image" src="./assets/images/video2_result_bagel.jpg" alt="BAGEL result for Example 2">
+          </div>
+          <p>BAGEL</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <h2 class="title is-3">Method</h2>
+        <div class="content has-text-justified">
+          <p>
+            To specifically address Next Shot Generation's challenges, Cut2Next incorporates: (1) Our <em>Context-Aware Condition Injection (CACI)</em> mechanism for nuanced integration of diverse conditional inputs. (2) A <em>Hierarchical Attention Mask (HAM)</em> to orchestrate the intricate flow between visual and textual tokens. This approach allows Cut2Next to effectively utilize our rich annotations and generate high-quality, cinematically coherent next shots that masterfully balance diversity with continuity, all without introducing additional parameters to the base model.
+          </p>
+          <div class="column">
+            <img src="./assets/images/arch.png" />
+          </div>
+        </div>
+        <!-- Paper video. -->
+          <div id="spotlight-video">
+            <div class="container is-max-desktop">
+                <div class="column">
+                  <h2 class="title is-3">
+                    <span class="a">Cu2Next</span>
+                    <span class="b">Demo</span>
+                  </h2>
+                  <div class="publication-video">
+                    <iframe src="https://www.youtube.com/embed/4-olVWzeXGY?rel=0&showinfo=0"
+                            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                  </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{,
+      title={Cut2Next: Generating Next Shot via In-Context Tuning},
+      author={Jingwen He and Hongbo Liu and Jiajun Li and Ziqi Huang and Yu Qiao and Wanli Ouyang and Ziwei Liu},
+      journal={arXiv preprint arXiv:},
+      year={2025}
+    }
+}</code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link" href="" target="_blank"><i class="fas fa-file-pdf"></i></a>
+      <a class="icon-link" href="https://github.com/Vchitect/Cut2Next" target="_blank"><i class="fab fa-github"></i></a>
+      <a class="icon-link" href="https://www.youtube.com/watch?v=4-olVWzeXGY" target="_blank"><i class="fab fa-youtube"></i></a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <div class="columns is-centered"><p>This website template is borrowed from <a href="https://github.com/nerfies/nerfies.github.io" target="_blank">Here</a>.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- JS files -->
+<script src="./assets/js/bulma-carousel.min.js"></script>
+<script src="./assets/js/bulma-slider.min.js"></script>
+<script src="./assets/js/index.js"></script>
+<script src="./assets/js/interactive-shot.js"></script>
+
+</body>
+</html>
